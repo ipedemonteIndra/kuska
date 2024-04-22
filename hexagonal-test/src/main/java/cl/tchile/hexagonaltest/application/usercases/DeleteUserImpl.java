@@ -17,6 +17,12 @@ public class DeleteUserImpl implements DeleteUser{
 
 
 
+	public DeleteUserImpl() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	@Override
 	public void deleteUser(String id) {
 

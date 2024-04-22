@@ -5,7 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.tchile.hexagonaltest.application.usercases.CreateUserImpl;
+import cl.tchile.hexagonaltest.application.usercases.DeleteUserImpl;
 import cl.tchile.hexagonaltest.application.usercases.GetUserImpl;
+import cl.tchile.hexagonaltest.application.usercases.UpdateUserImpl;
 import cl.tchile.hexagonaltest.domain.models.User;
 import cl.tchile.hexagonaltest.domain.ports.in.CreateUser;
 import cl.tchile.hexagonaltest.domain.ports.in.DeleteUser;
@@ -36,7 +39,6 @@ public class UserService implements CreateUser, DeleteUser, GetUser, UpdateUser{
 	}
 
 	
-	
 	public UserService(CreateUser createUser, DeleteUser deleteUser, GetUser getUser, UpdateUser updateUser) {
 		this.createUser = createUser;
 		this.deleteUser = deleteUser;
@@ -48,27 +50,27 @@ public class UserService implements CreateUser, DeleteUser, GetUser, UpdateUser{
 
 	@Override
 	public User updateUser(String id, User user) {
-		
+		updateUser = new UpdateUserImpl(this.mongo); 
 		return updateUser.updateUser(id, user);
 	}
 
 	@Override
 	public Optional<User> getUser(String id) {
 //		return jpaUserRepository.getById(id);
-		getUser = new GetUserImpl();
-//		return getUser.getUser(id);
-		return mongo.findById(id);
+		getUser = new GetUserImpl(this.mongo);
+		return getUser.getUser(id);
+//		return mongo.findById(id);
 	}
 
 	@Override
 	public void deleteUser(String id) {
-		
+		this.deleteUser = new DeleteUserImpl();
 		deleteUser.deleteUser(id);
 	}
 
 	@Override
 	public User createUser(User user) {
-		
+		this.createUser = new CreateUserImpl(this.mongo);
 		return createUser.createUser(user);
 	}
 	

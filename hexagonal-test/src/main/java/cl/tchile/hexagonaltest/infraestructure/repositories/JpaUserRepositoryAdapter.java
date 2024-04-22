@@ -27,10 +27,16 @@ import cl.tchile.hexagonaltest.infraestructure.entities.UserEntities;
 public class JpaUserRepositoryAdapter implements MongoUserRepository{
 
 	
-	@Autowired
 	MongoUserRepository mongo;
+	
+	
 
 	
+	public JpaUserRepositoryAdapter(MongoUserRepository mongo) {
+		super();
+		this.mongo = mongo;
+	}
+
 	@Override
 	public Optional<User> findById(String id) {
 		
@@ -86,8 +92,8 @@ public class JpaUserRepositoryAdapter implements MongoUserRepository{
 
 	@Override
 	public <S extends User> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mongo.save(entity);
 	}
 
 	
